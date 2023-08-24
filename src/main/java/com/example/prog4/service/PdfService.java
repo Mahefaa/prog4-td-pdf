@@ -1,10 +1,11 @@
 package com.example.prog4.service;
 
 import com.example.prog4.config.CompanyConf;
+import com.example.prog4.model.Employee;
 import com.example.prog4.model.exception.InternalServerErrorException;
-import com.example.prog4.repository.entity.Employee;
 import com.lowagie.text.DocumentException;
 import java.io.ByteArrayOutputStream;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -12,7 +13,11 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import static org.thymeleaf.templatemode.TemplateMode.HTML;
 
-public class PdfUtils {
+@Component
+public class PdfService {
+
+  private static final String EMPLOYEE_HTML_TEMPLATE = "employee_card";
+
   public byte[] generatePdf(Employee employee,
                             CompanyConf companyConf, String template) {
     ITextRenderer renderer = new ITextRenderer();
@@ -43,7 +48,6 @@ public class PdfUtils {
 
   private Context configureContext(Employee employee, CompanyConf companyConf) {
     Context context = new Context();
-
     context.setVariable("employee", employee);
     context.setVariable("companyConf", companyConf);
     return context;
@@ -51,14 +55,18 @@ public class PdfUtils {
 
   private TemplateEngine configureTemplate() {
     ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-    templateResolver.setPrefix("/templates/");
+    templateResolver.setPrefix("/pdf/");
     templateResolver.setSuffix(".html");
     templateResolver.setCharacterEncoding("UTF-8");
     templateResolver.setTemplateMode(HTML);
+    templateResolver.setOrder(1);
 
     TemplateEngine templateEngine = new TemplateEngine();
     templateEngine.setTemplateResolver(templateResolver);
     return templateEngine;
   }
 
+  public byte[] getPdfCard(Employee employee) {
+    return generatePdf(employee, new CompanyConf(), EMPLOYEE_HTML_TEMPLATE);
+  }
 }
