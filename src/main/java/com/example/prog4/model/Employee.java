@@ -3,6 +3,7 @@ package com.example.prog4.model;
 import com.example.prog4.repository.entity.Position;
 import com.example.prog4.repository.entity.enums.Csp;
 import com.example.prog4.repository.entity.enums.Sex;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +46,6 @@ public class Employee implements Serializable {
 
     private List<Position> positions;
     private List<Phone> phones;
-    private double monthlySalary;
+    private BigDecimal monthlySalary;
     private int age;
 }
