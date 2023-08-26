@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
         .profile_img {
-            width: 90px;
-            height: 90px;
+            width: 250px;
+            height: 250px;
         }
 
         .position-absolute {
@@ -55,7 +55,7 @@
     <style>
         body {
             box-sizing: border-box;
-            font-size: 10px;
+            font-size: medium;
             font-family: Helvetica, serif;
             padding: 0;
             margin: 0;
@@ -66,12 +66,14 @@
             display: block;
             position: running(footer);
             width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         @page {
             size: A4;
             margin-top: 30px;
-            margin-bottom: 120px;
+            margin-bottom: 30%;
             @bottom-center {
                 content: element(footer)
             }
@@ -82,7 +84,6 @@
         .company-logo {
             width: 100px;
             height: auto;
-            margin-right: 20px;
         }
 
         /* Style phone list */
@@ -93,20 +94,21 @@
         .list-unstyled li {
             margin-right: 10px;
         }
-/*
-measurements debugging
-        table {
-            border: 1px solid black;
-        }
 
-        tr {
-            border: 1px solid red;
-        }
+        /*
+        measurements debugging
+                table {
+                    border: 1px solid black;
+                }
 
-        td {
-            border: 1px solid green;
-        }
-*/
+                tr {
+                    border: 1px solid red;
+                }
+
+                td {
+                    border: 1px solid green;
+                }
+        */
         .container {
             position: relative;
         }
@@ -119,7 +121,7 @@ measurements debugging
         <td class="w-50 container">
             <img th:src="${employee.stringImage}" class="profile_img position-absolute top-0"/>
         </td>
-        <td class="text-left w-50">
+        <td class="w-50">
             <p class="text-center text-uppercase">FICHE EMPLOYÉ</p>
             <p>
                 <span>Numéro matricule : </span>
@@ -178,10 +180,10 @@ measurements debugging
     <table class="column">
         <tbody>
         <tr>
-            <td>
-                <img th:src="${companyConf.logo}" class="company-logo"/>
-            </td>
             <td class="container w-50">
+                <img th:src="${companyConf.logo}" class="company-logo position-absolute top-0"/>
+            </td>
+            <td class="container w-100">
                 <div class="position-absolute top-0">
                     <p th:text="${companyConf.name}"></p>
                     <p>
