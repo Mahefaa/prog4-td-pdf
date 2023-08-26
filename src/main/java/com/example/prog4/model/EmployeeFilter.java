@@ -36,6 +36,8 @@ public class EmployeeFilter implements Serializable {
     private Sort.Direction orderDirection = ASC;
     private String page = "1";
     private String perPage = "5";
+    private Integer ageFrom;
+    private Integer ageTo;
 
     public Integer getIntPage() {
         if (this.page == null || this.page.isBlank()) return 1;

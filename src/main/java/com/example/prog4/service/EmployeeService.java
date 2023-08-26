@@ -28,16 +28,19 @@ public class EmployeeService {
     public List<Employee> getAll(EmployeeFilter filter) {
         Sort sort = Sort.by(filter.getOrderDirection(), filter.getOrderBy().toString());
         Pageable pageable = PageRequest.of(filter.getIntPage() - 1, filter.getIntPerPage(), sort);
-        return employeeManagerDao.findByCriteria(
-                filter.getLastName(),
-                filter.getFirstName(),
-                filter.getCountryCode(),
-                filter.getSex(),
-                filter.getPosition(),
-                filter.getEntrance(),
-                filter.getDeparture(),
-                pageable
+        List<Employee> filtered = employeeManagerDao.findByCriteria(
+            filter.getLastName(),
+            filter.getFirstName(),
+            filter.getCountryCode(),
+            filter.getSex(),
+            filter.getPosition(),
+            filter.getEntrance(),
+            filter.getDeparture(),
+            pageable
         );
+        return filtered.stream()
+            .filter(a -> (filter.getAgeFrom() == null || a.getAge() >= filter.getAgeFrom()) && (filter.getAgeTo() == null || a.getAge() <= filter.getAgeTo()))
+            .toList();
     }
 
     public void saveOne(Employee employee) {

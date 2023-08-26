@@ -89,6 +89,16 @@
                     <option th:each="dir : ${directions}" th:value="${dir}" th:text="${dir}"></option>
                 </select>
             </div>
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="ageFrom" class="form-label">Age from</label>
+                <input type="number" th:field="*{ageFrom}" min="18" name="ageFrom" class="form-control"
+                       id="ageFrom">
+            </div>
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="ageTo" class="form-label">Age to</label>
+                <input type="number" th:field="*{ageTo}" min="18" name="ageFrom" class="form-control"
+                       id="ageTo">
+            </div>
             <div class="my-3 col-12">
                 <button type="submit" class="btn btn-primary">Filter</button>
             </div>
