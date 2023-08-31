@@ -12,13 +12,28 @@
     <div th:replace="~{components/navbar.html :: navbar('show / ' + ${eId})}"></div>
 </header>
 <div class="container-fluid row text-center">
+    <div>
+        <form th:action="@{/server/employee/show/{eId}/toPdf(eId=${employee.id})}" class="container row float-end align-items-center flex-box">
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="ageCriteria" class="form-label">Age Criteria</label>
+                <select id="ageCriteria" name="ageCriteria" class="form-select">
+                    <option th:each="criteria : ${T(com.example.prog4.model.enums.AgeCriteria).values()}"
+                            th:value="${criteria}"
+                            th:text="${criteria}"></option>
+                </select>
+            </div>
+            <div class="col-md-4 col-12 col-sm-6">
+                <label for="birthday_min_interval" class="form-label">Birthday min interval</label>
+                <input type="number" min="0" name="birthday_min_interval" class="form-control"
+                       id="birthday_min_interval">
+            </div>
+            <div class="col-md-4 col-12 col-sm-6">
+                <button class="btn btn-success form-text" type="submit">export to Pdf</button>
+            </div>
+        </form>
+    </div>
     <div class="col-12 d-flex justify-content-start mb-5 align-items-center">
         <img th:src="${employee.stringImage}" alt="no image">
-    </div>
-    <div>
-        <form th:action="@{/server/employee/show/{eId}/toPdf(eId=${employee.id})}" class="float-end">
-            <button class="btn btn-success form-text" type="submit">export to Pdf</button>
-        </form>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
         <label for="lastName" class="form-label text-black-50">Last name</label>

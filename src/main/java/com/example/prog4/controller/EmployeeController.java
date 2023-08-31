@@ -4,6 +4,7 @@ import com.example.prog4.controller.mapper.EmployeeMapper;
 import com.example.prog4.controller.validator.EmployeeValidator;
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.EmployeeFilter;
+import com.example.prog4.model.enums.AgeCriteria;
 import com.example.prog4.service.CSVUtils;
 import com.example.prog4.service.EmployeeService;
 import com.example.prog4.service.PdfService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
@@ -62,8 +64,16 @@ public class EmployeeController {
         return "redirect:/employee/list";
     }
     @GetMapping(value = "/show/{eId}/toPdf", produces = APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> toPdf(@PathVariable("eId") String employeeId) {
-        Employee employee = employeeMapper.toView(employeeService.getOne(employeeId));
+    public ResponseEntity<byte[]> toPdf(
+        @PathVariable("eId") String employeeId,
+        @RequestParam(value = "ageCriteria", required = false, defaultValue = "BIRTHDAY")
+        AgeCriteria ageCriteria,
+        @RequestParam(value = "birthday_min_interval", required = false) Long birthdayMinInterval) {
+        Employee employee = employeeMapper.toView(
+            employeeService.getOne(employeeId),
+            ageCriteria,
+            birthdayMinInterval
+        );
         byte[] pdfCardAsBytes = pdfService.getPdfCard(employee);
 
         HttpHeaders headers = new HttpHeaders();

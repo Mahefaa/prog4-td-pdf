@@ -1,6 +1,7 @@
 package com.example.prog4.controller.mapper;
 
 import com.example.prog4.model.Employee;
+import com.example.prog4.model.enums.AgeCriteria;
 import com.example.prog4.model.exception.BadRequestException;
 import com.example.prog4.repository.PositionRepository;
 import com.example.prog4.repository.entity.Phone;
@@ -84,6 +85,37 @@ public class EmployeeMapper {
                 .childrenNumber(employee.getChildrenNumber())
                 .monthlySalary(employee.getMonthlySalary())
                 .age(employee.getAge())
+                // enums
+                .csp(employee.getCsp())
+                .sex(employee.getSex())
+                .stringImage(employee.getImage())
+                // emails
+                .professionalEmail(employee.getProfessionalEmail())
+                .personalEmail(employee.getPersonalEmail())
+                // dates
+                .birthDate(employee.getBirthDate())
+                .departureDate(employee.getDepartureDate())
+                .entranceDate(employee.getEntranceDate())
+                // lists
+                .phones(employee.getPhones().stream().map(phoneMapper::toView).toList())
+                .positions(employee.getPositions())
+                .build();
+    }
+    public Employee toView(
+        com.example.prog4.repository.entity.Employee employee,
+        AgeCriteria ageCriteria,
+        Long birthdayMinInterval) {
+        return Employee.builder()
+                .id(employee.getId())
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
+                .address(employee.getAddress())
+                .cin(employee.getCin())
+                .cnaps(employee.getCnaps())
+                .registrationNumber(employee.getRegistrationNumber())
+                .childrenNumber(employee.getChildrenNumber())
+                .monthlySalary(employee.getMonthlySalary())
+                .age(employee.getAgeFromCriteriaAndInterval(ageCriteria, birthdayMinInterval))
                 // enums
                 .csp(employee.getCsp())
                 .sex(employee.getSex())
