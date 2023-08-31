@@ -78,7 +78,7 @@ public class EmployeeController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "employee.csv");
+        headers.setContentDispositionFormData("attachment", "employee.pdf");
         headers.setContentLength(pdfCardAsBytes.length);
         return new ResponseEntity<>(pdfCardAsBytes, headers, OK);
     }
